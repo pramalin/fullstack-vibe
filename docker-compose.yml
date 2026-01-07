@@ -1,0 +1,69 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Database
+  postgres:
+    image: postgres:15-alpine
+    container_name: contact-app-db
+    environment:
+      POSTGRES_DB: contact_app_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      # Mount initialization scripts
+      - ./init-db:/docker-entrypoint-initdb.d
+      # Mount data volume for persistence
+      - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - contact-app-network
+
+  # Spring Boot Backend
+  backend:
+    build:
+      context: ./contact-app-backend
+      dockerfile: Dockerfile
+    container_name: contact-app-backend
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/contact_app_db
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: postgres
+      SPRING_JPA_HIBERNATE_DDL_AUTO: validate
+    ports:
+      - "8080:8080"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    volumes:
+      - ./contact-app-backend/uploads:/app/uploads
+    networks:
+      - contact-app-network
+
+  # React Frontend
+  frontend:
+    build:
+      context: ./contact-app-frontend
+      dockerfile: Dockerfile
+    container_name: contact-app-frontend
+    environment:
+      VITE_API_BASE_URL: http://localhost:8080/api
+    ports:
+      - "5173:5173"
+    depends_on:
+      - backend
+    networks:
+      - contact-app-network
+
+volumes:
+  postgres-data:
+    driver: local
+
+networks:
+  contact-app-network:
+    driver: bridge
