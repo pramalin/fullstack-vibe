@@ -3,7 +3,6 @@ package com.contactapp.service;
 import com.contactapp.dto.ContactDTO;
 import com.contactapp.model.Contact;
 import com.contactapp.repository.ContactRepository;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -19,12 +18,16 @@ import java.nio.file.Paths;
 import java.util.UUID;
 
 @Service
-@RequiredArgsConstructor
 @Transactional
 public class ContactService {
 
     private final ContactRepository contactRepository;
     private static final String UPLOAD_DIR = "uploads/photos";
+
+    // Constructor injection (replacing Lombok @RequiredArgsConstructor)
+    public ContactService(ContactRepository contactRepository) {
+        this.contactRepository = contactRepository;
+    }
 
     public ContactDTO createContact(ContactDTO contactDTO, MultipartFile photoFile) throws IOException {
         Contact contact = new Contact();

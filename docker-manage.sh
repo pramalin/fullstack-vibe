@@ -38,10 +38,10 @@ start_services() {
     print_header "Starting Contact Manager Application"
     
     print_info "Building Docker images..."
-    docker-compose -f "$DOCKER_COMPOSE_FILE" build --no-cache
+    docker compose -f "$DOCKER_COMPOSE_FILE" build --no-cache
     
     print_info "Starting services..."
-    docker-compose -f "$DOCKER_COMPOSE_FILE" up -d
+    docker compose -f "$DOCKER_COMPOSE_FILE" up -d
     
     print_success "Services started!"
     print_info "Waiting for services to be healthy..."
@@ -50,7 +50,7 @@ start_services() {
     sleep 10
     
     # Check health
-    if docker-compose -f "$DOCKER_COMPOSE_FILE" ps | grep -q "contact-app-db.*healthy"; then
+    if docker compose -f "$DOCKER_COMPOSE_FILE" ps | grep -q "contact-app-db.*healthy"; then
         print_success "Database is healthy!"
     else
         print_error "Database is not healthy yet. Waiting..."
@@ -67,13 +67,13 @@ start_services() {
 
 stop_services() {
     print_header "Stopping Contact Manager Application"
-    docker-compose -f "$DOCKER_COMPOSE_FILE" down
+    docker compose -f "$DOCKER_COMPOSE_FILE" down
     print_success "Services stopped!"
 }
 
 restart_services() {
     print_header "Restarting Contact Manager Application"
-    docker-compose -f "$DOCKER_COMPOSE_FILE" restart
+    docker compose -f "$DOCKER_COMPOSE_FILE" restart
     print_success "Services restarted!"
 }
 
@@ -81,16 +81,16 @@ view_logs() {
     SERVICE=$1
     if [ -z "$SERVICE" ]; then
         print_header "Application Logs (All Services)"
-        docker-compose -f "$DOCKER_COMPOSE_FILE" logs -f
+        docker compose -f "$DOCKER_COMPOSE_FILE" logs -f
     else
         print_header "Logs for $SERVICE"
-        docker-compose -f "$DOCKER_COMPOSE_FILE" logs -f "$SERVICE"
+        docker compose -f "$DOCKER_COMPOSE_FILE" logs -f "$SERVICE"
     fi
 }
 
 status() {
     print_header "Service Status"
-    docker-compose -f "$DOCKER_COMPOSE_FILE" ps
+    docker compose -f "$DOCKER_COMPOSE_FILE" ps
 }
 
 cleanup() {
@@ -99,7 +99,7 @@ cleanup() {
     read -p "Are you sure? (yes/no): " CONFIRM
     
     if [ "$CONFIRM" = "yes" ]; then
-        docker-compose -f "$DOCKER_COMPOSE_FILE" down -v
+        docker compose -f "$DOCKER_COMPOSE_FILE" down -v
         print_success "Cleanup completed!"
     else
         print_info "Cleanup cancelled."
@@ -109,24 +109,24 @@ cleanup() {
 access_database() {
     print_header "Accessing PostgreSQL Database"
     print_info "Entering PostgreSQL CLI..."
-    docker-compose -f "$DOCKER_COMPOSE_FILE" exec postgres psql -U postgres -d contact_app_db
+    docker compose -f "$DOCKER_COMPOSE_FILE" exec postgres psql -U postgres -d contact_app_db
 }
 
 access_backend_shell() {
     print_header "Accessing Backend Container"
     print_info "Entering backend shell..."
-    docker-compose -f "$DOCKER_COMPOSE_FILE" exec backend /bin/sh
+    docker compose -f "$DOCKER_COMPOSE_FILE" exec backend /bin/sh
 }
 
 access_frontend_shell() {
     print_header "Accessing Frontend Container"
     print_info "Entering frontend shell..."
-    docker-compose -f "$DOCKER_COMPOSE_FILE" exec frontend /bin/sh
+    docker compose -f "$DOCKER_COMPOSE_FILE" exec frontend /bin/sh
 }
 
 rebuild_services() {
     print_header "Rebuilding Services"
-    docker-compose -f "$DOCKER_COMPOSE_FILE" build --no-cache
+    docker compose -f "$DOCKER_COMPOSE_FILE" build --no-cache
     print_success "Services rebuilt!"
 }
 

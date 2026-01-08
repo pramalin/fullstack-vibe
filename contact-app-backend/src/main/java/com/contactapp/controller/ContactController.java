@@ -3,7 +3,6 @@ package com.contactapp.controller;
 import com.contactapp.dto.ContactDTO;
 import com.contactapp.service.ContactService;
 import jakarta.validation.Valid;
-import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,11 +13,15 @@ import java.io.IOException;
 
 @RestController
 @RequestMapping("/contacts")
-@RequiredArgsConstructor
 @CrossOrigin(origins = {"http://localhost:3000", "http://localhost:5173"}, allowCredentials = "true")
 public class ContactController {
 
     private final ContactService contactService;
+
+    // Constructor injection (replacing Lombok @RequiredArgsConstructor)
+    public ContactController(ContactService contactService) {
+        this.contactService = contactService;
+    }
 
     @PostMapping
     public ResponseEntity<ContactDTO> createContact(

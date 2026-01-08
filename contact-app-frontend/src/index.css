@@ -2,10 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
-* {
-  @apply border-border;
+body {
+  @apply bg-white text-gray-900;
 }
 
-body {
-  @apply bg-background text-foreground;
+* {
+  @apply border-gray-200;
 }
