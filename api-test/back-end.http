@@ -1,0 +1,26 @@
+get http://localhost:8080/api/contacts
+
+###
+
+post http://localhost:8080/api/api/chat
+Content-Type: application/json
+
+{
+  "prompt": "Hello, how can I assist you today?"
+}
+
+###
+post http://localhost:8080/api/api/chat
+Content-Type: application/json
+
+{
+  "prompt": "get contact with id 1"
+}
+
+###
+post http://localhost:8080/api/api/chat
+Content-Type: application/json
+
+{
+  "prompt": "can you Search contacts by name?"
+}
