@@ -1,7 +1,0 @@
-/home/padhu/projects/fullstack-vibe/contact-app-backend/src/main/java/com/contactapp/ContactAppBackendApplication.java
-/home/padhu/projects/fullstack-vibe/contact-app-backend/src/main/java/com/contactapp/controller/ContactController.java
-/home/padhu/projects/fullstack-vibe/contact-app-backend/src/main/java/com/contactapp/dto/ContactDTO.java
-/home/padhu/projects/fullstack-vibe/contact-app-backend/src/main/java/com/contactapp/exception/GlobalExceptionHandler.java
-/home/padhu/projects/fullstack-vibe/contact-app-backend/src/main/java/com/contactapp/model/Contact.java
-/home/padhu/projects/fullstack-vibe/contact-app-backend/src/main/java/com/contactapp/repository/ContactRepository.java
-/home/padhu/projects/fullstack-vibe/contact-app-backend/src/main/java/com/contactapp/service/ContactService.java

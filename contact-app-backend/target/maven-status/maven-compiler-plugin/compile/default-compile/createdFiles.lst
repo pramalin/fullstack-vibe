@@ -1,9 +1,0 @@
-com/contactapp/controller/ContactController.class
-com/contactapp/ContactAppBackendApplication$1.class
-com/contactapp/model/Contact.class
-com/contactapp/repository/ContactRepository.class
-com/contactapp/ContactAppBackendApplication.class
-com/contactapp/dto/ContactDTO$ContactDTOBuilder.class
-com/contactapp/service/ContactService.class
-com/contactapp/exception/GlobalExceptionHandler.class
-com/contactapp/dto/ContactDTO.class
